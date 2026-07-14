@@ -1,0 +1,33 @@
+﻿@model IEnumerable<DaniGroup.Models.ServiceItem>
+
+<h2>Dropper Services</h2>
+
+<div class="form-box mb-4">
+    <p>
+        Dani Group Dropper provides fast, dependable service solutions for transport,
+        delivery, towing, and driver opportunities.
+    </p>
+</div>
+
+<div class="row">
+    @foreach (var service in Model)
+    {
+        <div class="col-md-6 mb-4">
+            <div class="card dani-card h-100">
+                <div class="card-body">
+                    <h4>@service.Title</h4>
+                    <p>@service.Description</p>
+
+                    @if (service.Title == "Become a Driver")
+                    {
+                        <a asp-controller="Contact" asp-action="Index" class="btn btn-dani-primary">Apply / Contact Us</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Contact" asp-action="Index" class="btn btn-dani-outline">Request Service</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

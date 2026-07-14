@@ -1,0 +1,93 @@
+﻿@model DaniGroup.Models.CheckoutViewModel
+
+<h2>Checkout</h2>
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="form-box">
+            <form asp-action="Index" method="post">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="FullName"></label>
+                    <input asp-for="FullName" class="form-control" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="AddressLine1"></label>
+                    <input asp-for="AddressLine1" class="form-control" />
+                    <span asp-validation-for="AddressLine1" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="AddressLine2"></label>
+                    <input asp-for="AddressLine2" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="City"></label>
+                    <input asp-for="City" class="form-control" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="State"></label>
+                    <input asp-for="State" class="form-control" />
+                    <span asp-validation-for="State" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PostalCode"></label>
+                    <input asp-for="PostalCode" class="form-control" />
+                    <span asp-validation-for="PostalCode" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Country"></label>
+                    <input asp-for="Country" class="form-control" />
+                    <span asp-validation-for="Country" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-dani-primary">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="form-box">
+            <h4>Order Summary</h4>
+
+            @if (Model.CartItems != null && Model.CartItems.Any())
+            {
+                <ul class="list-group mb-3">
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <li class="list-group-item bg-dark text-white border-secondary d-flex justify-content-between">
+                            <span>@item.Product?.Name x @item.Quantity</span>
+                            <span>R @(((item.Product?.Price ?? 0) * item.Quantity).ToString("N2"))</span>
+                        </li>
+                    }
+                </ul>
+
+                <h5>Total: R @Model.CartTotal.ToString("N2")</h5>
+            }
+            else
+            {
+                <p>No items in cart.</p>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

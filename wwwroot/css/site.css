@@ -1,0 +1,201 @@
+:root {
+    --dani-orange: #f57c00;
+    --dani-orange-dark: #d96a00;
+    --dani-black: #111111;
+    --dani-dark: #1c1c1c;
+    --dani-white: #ffffff;
+    --dani-light: #f4f4f4;
+}
+
+body.site-body {
+    font-family: Arial, sans-serif;
+    background-color: #111111;
+    background-image: url('/images/backgrounds/site-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.content-wrapper {
+    min-height: 80vh;
+}
+
+.dani-navbar {
+    background-color: #000000 !important;
+    border-bottom: 3px solid var(--dani-orange);
+}
+
+.site-logo {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
+.brand-text {
+    color: var(--dani-orange);
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.navbar .nav-link {
+    color: white !important;
+    font-weight: 500;
+}
+
+    .navbar .nav-link:hover {
+        color: var(--dani-orange) !important;
+    }
+
+.hero-section {
+    background: url('/images/backgrounds/home-hero.jpg') center center / cover no-repeat;
+    min-height: 500px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+
+.hero-overlay {
+    background: rgba(0,0,0,0.65);
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.hero-content h1 {
+    color: var(--dani-orange);
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.section-title,
+h1, h2, h3, h4, h5 {
+    color: var(--dani-orange);
+}
+
+.btn-dani-primary {
+    background-color: var(--dani-orange);
+    color: white;
+    border: none;
+}
+
+    .btn-dani-primary:hover {
+        background-color: var(--dani-orange-dark);
+        color: white;
+    }
+
+.btn-dani-outline {
+    border: 2px solid var(--dani-orange);
+    color: var(--dani-orange);
+    background: transparent;
+}
+
+    .btn-dani-outline:hover {
+        background-color: var(--dani-orange);
+        color: white;
+    }
+
+.dani-card {
+    background-color: rgba(20,20,20,0.96);
+    color: white;
+    border: 1px solid #333;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+    transition: transform 0.2s ease;
+}
+
+    .dani-card:hover {
+        transform: translateY(-5px);
+    }
+
+.product-image {
+    height: 250px;
+    object-fit: cover;
+}
+
+.product-price {
+    color: #ffb347;
+    font-size: 1.1rem;
+}
+
+.form-box {
+    background-color: rgba(0,0,0,0.7);
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+input.form-control,
+select.form-select,
+textarea.form-control {
+    background-color: #222;
+    color: white;
+    border: 1px solid #555;
+}
+
+    input.form-control:focus,
+    select.form-select:focus,
+    textarea.form-control:focus {
+        background-color: #222;
+        color: white;
+        border-color: var(--dani-orange);
+        box-shadow: 0 0 0 0.2rem rgba(245,124,0,0.25);
+    }
+
+.table {
+    color: white;
+    background-color: rgba(0,0,0,0.45);
+}
+
+    .table th {
+        color: var(--dani-orange);
+    }
+
+.dashboard-card {
+    background: rgba(0,0,0,0.75);
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+}
+
+.category-box {
+    background: rgba(0,0,0,0.7);
+    border-left: 5px solid var(--dani-orange);
+    padding: 20px;
+    border-radius: 10px;
+    height: 100%;
+}
+
+.dani-footer {
+    background-color: #000;
+    border-top: 3px solid var(--dani-orange);
+    color: white;
+}
+
+a {
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: none;
+    }
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .site-logo {
+        height: 40px;
+    }
+}

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<DaniGroup.Models.ContactMessage>
+
+<h2>Contact Messages</h2>
+
+<div class="form-box">
+    @if (!Model.Any())
+    {
+        <p>No messages found.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var message in Model)
+                {
+                    <tr>
+                        <td>@message.CreatedAt.ToString("yyyy-MM-dd")</td>
+                        <td>@message.Name</td>
+                        <td>@message.Email</td>
+                        <td>@message.Subject</td>
+                        <td>@message.Message</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

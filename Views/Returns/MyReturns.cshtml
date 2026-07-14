@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DaniGroup.Models.ReturnRequest>
+
+<h2>My Return Requests</h2>
+
+<div class="form-box">
+    @if (!Model.Any())
+    {
+        <p>No return requests found.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order Reference</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Damage Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.OrderReference</td>
+                        <td>@item.Reason</td>
+                        <td>@item.Status</td>
+                        <td>@item.CreatedAt.ToString("yyyy-MM-dd")</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.DamageImagePath))
+                            {
+                                <a href="@item.DamageImagePath" target="_blank" class="btn btn-dani-outline btn-sm">View Image</a>
+                            }
+                            else
+                            {
+                                <span>No image</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

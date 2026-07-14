@@ -1,0 +1,59 @@
+﻿@model DaniGroup.Models.Order
+
+<h2>Order Details</h2>
+
+<div class="form-box">
+    <p><strong>Order ID:</strong> @Model.Id</p>
+    <p><strong>Customer:</strong> @Model.FullName</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p>
+        <strong>Address:</strong>
+        @Model.AddressLine1, @Model.City, @Model.State, @Model.PostalCode, @Model.Country
+    </p>
+    <p><strong>Status:</strong> @Model.OrderStatus</p>
+    <p><strong>Created:</strong> @Model.CreatedAt</p>
+
+    <form asp-action="UpdateOrderStatus" method="post" class="mb-4">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="orderId" value="@Model.Id" />
+
+        <div class="row">
+            <div class="col-md-6">
+                <select name="orderStatus" class="form-select">
+                    <option value="Pending">Pending</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-dani-primary">Update Status</button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Unit Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems)
+            {
+                <tr>
+                    <td>@item.Product?.Name</td>
+                    <td>R @item.UnitPrice.ToString("N2")</td>
+                    <td>@item.Quantity</td>
+                    <td>R @((item.UnitPrice * item.Quantity).ToString("N2"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4 class="text-end">Order Total: R @Model.TotalAmount.ToString("N2")</h4>
+</div>

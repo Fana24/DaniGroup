@@ -1,0 +1,46 @@
+﻿@model DaniGroup.Models.Order
+
+<h2>Order Details</h2>
+
+<div class="form-box">
+    <p><strong>Order ID:</strong> @Model.Id</p>
+    <p><strong>Date:</strong> @Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")</p>
+    <p><strong>Status:</strong> @Model.OrderStatus</p>
+    <p>
+        <strong>Shipping Address:</strong><br />
+        @Model.FullName<br />
+        @Model.AddressLine1<br />
+        @if (!string.IsNullOrWhiteSpace(Model.AddressLine2))
+        {
+            @Model.AddressLine2
+        
+            <br />
+        }
+        @Model.City, @Model.State, @Model.PostalCode<br />
+        @Model.Country
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Line Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems)
+            {
+                <tr>
+                    <td>@item.Product?.Name</td>
+                    <td>R @item.UnitPrice.ToString("N2")</td>
+                    <td>@item.Quantity</td>
+                    <td>R @((item.UnitPrice * item.Quantity).ToString("N2"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4 class="text-end">Total: R @Model.TotalAmount.ToString("N2")</h4>
+</div>

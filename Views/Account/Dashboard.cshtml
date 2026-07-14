@@ -1,0 +1,76 @@
+﻿@model DaniGroup.Models.AccountDashboardViewModel
+
+<h2>My Account</h2>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="dashboard-card">
+            <h4>Email</h4>
+            <p>@Model.Email</p>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="dashboard-card">
+            <h4>Cart Items</h4>
+            <p>@Model.CartItemCount</p>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="dashboard-card">
+            <h4>Orders</h4>
+            <p>@Model.OrderCount</p>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="dashboard-card">
+            <h4>Returns</h4>
+            <p>@Model.ReturnCount</p>
+        </div>
+    </div>
+</div>
+
+<div class="form-box mb-4">
+    <h3>Quick Links</h3>
+    <div class="mt-3">
+        <a asp-controller="Orders" asp-action="Index" class="btn btn-dani-primary me-2 mb-2">My Orders</a>
+        <a asp-controller="Returns" asp-action="MyReturns" class="btn btn-dani-outline me-2 mb-2">My Returns</a>
+        <a asp-controller="Cart" asp-action="Index" class="btn btn-dani-outline me-2 mb-2">My Cart</a>
+        <a href="/Identity/Account/Manage" class="btn btn-dani-outline mb-2">Manage Profile</a>
+    </div>
+</div>
+
+<div class="form-box">
+    <h3>Recent Orders</h3>
+
+    @if (Model.RecentOrders == null || !Model.RecentOrders.Any())
+    {
+        <p>No recent orders found.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.RecentOrders)
+                {
+                    <tr>
+                        <td>@order.Id</td>
+                        <td>@order.CreatedAt.ToString("yyyy-MM-dd")</td>
+                        <td>@order.OrderStatus</td>
+                        <td>R @order.TotalAmount.ToString("N2")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

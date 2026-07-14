@@ -1,0 +1,43 @@
+﻿@model IEnumerable<DaniGroup.Models.Product>
+
+<h2>Manage Products</h2>
+
+<p>
+    <a asp-action="AddProduct" class="btn btn-dani-primary">Add New Product</a>
+</p>
+
+<div class="form-box">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Featured</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Category?.Name</td>
+                    <td>R @product.Price.ToString("N2")</td>
+                    <td>@product.StockQuantity</td>
+                    <td>@product.IsFeatured</td>
+                    <td>
+                        <a asp-action="EditProduct" asp-route-id="@product.Id" class="btn btn-primary btn-sm">Edit</a>
+
+                        <form asp-action="DeleteProduct" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@product.Id" />
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<DaniGroup.Models.Product>
+
+<h2>Online Store</h2>
+
+<div class="form-box mb-4">
+    <form method="get" class="row g-3">
+        <div class="col-md-5">
+            <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" class="form-control" placeholder="Search products..." />
+        </div>
+
+        <div class="col-md-4">
+            <select name="categoryId" class="form-select">
+                <option value="">All Categories</option>
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-dani-primary w-100">Search</button>
+        </div>
+    </form>
+</div>
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card dani-card h-100">
+                @if (!string.IsNullOrEmpty(product.ImagePath))
+                {
+                    <img src="@product.ImagePath" class="card-img-top product-image" alt="@product.Name" />
+                }
+
+                <div class="card-body">
+                    <h5>@product.Name</h5>
+                    <p>@product.Category?.Name</p>
+                    <p class="product-price">R @product.Price.ToString("N2")</p>
+                    <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-dani-primary">Details</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

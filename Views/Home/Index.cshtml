@@ -1,0 +1,71 @@
+﻿@model IEnumerable<DaniGroup.Models.Product>
+
+<section class="hero-section">
+    <div class="hero-overlay">
+        <div class="hero-content text-center">
+            <h1>Dani Group</h1>
+            <p>
+                Your trusted source for car parts, accessories, bike parts,
+                parcel delivery, towing, and moving services.
+            </p>
+            <a asp-controller="Products" asp-action="Index" class="btn btn-dani-primary btn-lg me-2">Shop Now</a>
+            <a asp-controller="Dropper" asp-action="Index" class="btn btn-dani-outline btn-lg">Explore Dropper</a>
+        </div>
+    </div>
+</section>
+
+<section class="text-center my-5">
+    <img src="~/images/logo/DaniLogo.png" style="max-height: 140px;" class="mb-3" />
+    <h2 class="section-title">Dani Group</h2>
+    <p>Quality car parts, accessories, bike parts, and dependable support services.</p>
+</section>
+
+<section class="my-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="category-box">
+                <h3>Car Parts</h3>
+                <p>Reliable parts for maintenance, repair, and vehicle upgrades.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="category-box">
+                <h3>Accessories</h3>
+                <p>Interior and exterior accessories designed for style and function.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="category-box">
+                <h3>Bike Parts</h3>
+                <p>Durable bike parts and maintenance items for everyday performance.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="my-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title">Featured Products</h2>
+        <p>Some of our popular products</p>
+    </div>
+
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card dani-card h-100">
+                    @if (!string.IsNullOrEmpty(product.ImagePath))
+                    {
+                        <img src="@product.ImagePath" class="card-img-top product-image" alt="@product.Name" />
+                    }
+                    <div class="card-body">
+                        <h5>@product.Name</h5>
+                        <p>@product.Description</p>
+                        <p class="product-price"><strong>R @product.Price.ToString("N2")</strong></p>
+                        <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="btn btn-dani-primary">View Product</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
