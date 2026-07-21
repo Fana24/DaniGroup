@@ -1,5 +1,6 @@
 ﻿using DaniGroup.Data;
 using DaniGroup.Models;
+using DaniGroup.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,17 +13,23 @@ namespace DaniGroup.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly YocoPaymentService _yocoPaymentService;
 
-        public CheckoutController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public CheckoutController(
+            ApplicationDbContext context,
+            UserManager<IdentityUser> userManager,
+            YocoPaymentService yocoPaymentService)
         {
             _context = context;
             _userManager = userManager;
+            _yocoPaymentService = yocoPaymentService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Challenge();
 
             var cartItems = await _context.CartItems
                 .Include(c => c.Product)
@@ -36,18 +43,20 @@ namespace DaniGroup.Controllers
 
             var model = new CheckoutViewModel
             {
-                Email = user.Email,
+                Email = user.Email ?? "",
                 CartItems = cartItems,
-                CartTotal = cartItems.Sum(c => (c.Product.Price * c.Quantity))
+                CartTotal = cartItems.Sum(c => (c.Product?.Price ?? 0) * c.Quantity)
             };
 
             return View(model);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(CheckoutViewModel model)
         {
             var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Challenge();
 
             var cartItems = await _context.CartItems
                 .Include(c => c.Product)
@@ -55,7 +64,12 @@ namespace DaniGroup.Controllers
                 .ToListAsync();
 
             model.CartItems = cartItems;
-            model.CartTotal = cartItems.Sum(c => (c.Product.Price * c.Quantity));
+            model.CartTotal = cartItems.Sum(c => (c.Product?.Price ?? 0) * c.Quantity);
+
+            if (!cartItems.Any())
+            {
+                ModelState.AddModelError("", "Your cart is empty.");
+            }
 
             if (!ModelState.IsValid)
             {
@@ -74,35 +88,48 @@ namespace DaniGroup.Controllers
                 PostalCode = model.PostalCode,
                 Country = model.Country,
                 TotalAmount = model.CartTotal,
-                OrderStatus = "Pending"
+                OrderStatus = "Pending Payment",
+                PaymentStatus = "Pending",
+                PaymentProvider = "Yoco"
             };
 
-            foreach (var item in cartItems)
+            foreach (var cartItem in cartItems)
             {
+                if (cartItem.Product == null) continue;
+
                 order.OrderItems.Add(new OrderItem
                 {
-                    ProductId = item.ProductId,
-                    Quantity = item.Quantity,
-                    UnitPrice = item.Product.Price
+                    ProductId = cartItem.ProductId,
+                    Quantity = cartItem.Quantity,
+                    UnitPrice = cartItem.Product.Price
                 });
             }
 
             _context.Orders.Add(order);
-            _context.CartItems.RemoveRange(cartItems);
-
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Success", new { id = order.Id });
-        }
+            var yocoResult = await _yocoPaymentService.CreateCheckoutAsync(order);
 
-        public async Task<IActionResult> Success(int id)
-        {
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+            if (!string.IsNullOrWhiteSpace(yocoResult.ErrorMessage))
+            {
+                ModelState.AddModelError("", yocoResult.ErrorMessage);
+                return View(model);
+            }
 
-            if (order == null)
-                return NotFound();
+            order.PaymentCheckoutId = yocoResult.Id;
+            order.PaymentReference = yocoResult.Id;
+            await _context.SaveChangesAsync();
 
-            return View(order);
+            if (string.IsNullOrWhiteSpace(yocoResult.RedirectUrl))
+            {
+                throw new Exception("Yoco did not return a redirect URL. Check Yoco API response format.");
+            }
+
+            // In a more advanced production setup, only clear cart after verified payment success webhook.
+            _context.CartItems.RemoveRange(cartItems);
+            await _context.SaveChangesAsync();
+
+            return Redirect(yocoResult.RedirectUrl);
         }
     }
 }

@@ -3,21 +3,26 @@
 <section class="hero-section">
     <div class="hero-overlay">
         <div class="hero-content text-center">
+            <span class="badge-dani mb-3 d-inline-block">Trusted Automotive & Service Platform</span>
             <h1>Dani Group</h1>
             <p>
-                Your trusted source for car parts, accessories, bike parts,
-                parcel delivery, towing, and moving services.
+                Your trusted destination for premium car parts, appliances, accessories, bike parts,
+                parcel delivery, towing, furniture moving, and reliable customer support.
             </p>
-            <a asp-controller="Products" asp-action="Index" class="btn btn-dani-primary btn-lg me-2">Shop Now</a>
-            <a asp-controller="Dropper" asp-action="Index" class="btn btn-dani-outline btn-lg">Explore Dropper</a>
+            <div class="mt-4">
+                <a asp-controller="Products" asp-action="Index" class="btn btn-dani-primary btn-lg me-2 mb-2">Shop Now</a>
+                <a asp-controller="Dropper" asp-action="Index" class="btn btn-dani-outline btn-lg mb-2">Explore Services</a>
+            </div>
         </div>
     </div>
 </section>
 
 <section class="text-center my-5">
-    <img src="~/images/logo/DaniLogo.png" style="max-height: 140px;" class="mb-3" />
-    <h2 class="section-title">Dani Group</h2>
-    <p>Quality car parts, accessories, bike parts, and dependable support services.</p>
+    <img src="~/images/logo/DA Logo.png" asp-append-version="true" alt="Dani Group Logo" style="max-height: 150px;" class="mb-3" />
+    <h2 class="section-title">Performance. Reliability. Service.</h2>
+    <p class="text-muted-custom">
+        Dani Group brings together automotive retail and practical customer services in one powerful platform.
+    </p>
 </section>
 
 <section class="my-5">
@@ -25,28 +30,67 @@
         <div class="col-md-4">
             <div class="category-box">
                 <h3>Car Parts</h3>
-                <p>Reliable parts for maintenance, repair, and vehicle upgrades.</p>
+                <p>High-quality parts for repairs, upgrades, and long-term performance.</p>
+                <a asp-controller="Products" asp-action="Index" class="btn btn-dani-outline mt-2">Browse Parts</a>
             </div>
         </div>
         <div class="col-md-4">
             <div class="category-box">
                 <h3>Accessories</h3>
-                <p>Interior and exterior accessories designed for style and function.</p>
+                <p>Modern interior and exterior accessories built for style and convenience.</p>
+                <a asp-controller="Products" asp-action="Index" class="btn btn-dani-outline mt-2">Browse Accessories</a>
             </div>
         </div>
         <div class="col-md-4">
             <div class="category-box">
                 <h3>Bike Parts</h3>
-                <p>Durable bike parts and maintenance items for everyday performance.</p>
+                <p>Strong, reliable bike components and maintenance essentials.</p>
+                <a asp-controller="Products" asp-action="Index" class="btn btn-dani-outline mt-2">Browse Bike Parts</a>
             </div>
         </div>
     </div>
 </section>
 
 <section class="my-5">
-    <div class="text-center mb-4">
+    <div class="page-banner text-center">
+        <h2 class="section-title">Dropper Services</h2>
+        <p class="text-muted-custom mb-0">
+            From parcel delivery to 24-hour towing, Dani Group helps keep your day moving.
+        </p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <h4>Send Parcels</h4>
+                <p>Secure parcel movement with fast service options.</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <h4>Move Furniture</h4>
+                <p>Convenient furniture transport for home and office needs.</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <h4>24hr Towing</h4>
+                <p>Round-the-clock towing support when you need it most.</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="dashboard-card">
+                <h4>Become a Driver</h4>
+                <p>Join Dani Group and grow with our service network.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mt-5">
+    <div class="page-banner text-center">
         <h2 class="section-title">Featured Products</h2>
-        <p>Some of our popular products</p>
+        <p class="text-muted-custom mb-0">Selected products from our latest collection</p>
     </div>
 
     <div class="row">
@@ -58,9 +102,9 @@
                     {
                         <img src="@product.ImagePath" class="card-img-top product-image" alt="@product.Name" />
                     }
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column">
                         <h5>@product.Name</h5>
-                        <p>@product.Description</p>
+                        <p class="flex-grow-1">@product.Description</p>
                         <p class="product-price"><strong>R @product.Price.ToString("N2")</strong></p>
                         <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="btn btn-dani-primary">View Product</a>
                     </div>

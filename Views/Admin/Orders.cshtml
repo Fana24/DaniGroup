@@ -10,6 +10,7 @@
                 <th>Customer</th>
                 <th>Email</th>
                 <th>Status</th>
+                <th>Payment</th>
                 <th>Date</th>
                 <th>Total</th>
                 <th></th>
@@ -23,6 +24,7 @@
                     <td>@order.FullName</td>
                     <td>@order.Email</td>
                     <td>@order.OrderStatus</td>
+                    <td>@order.PaymentStatus</td>
                     <td>@order.CreatedAt.ToString("yyyy-MM-dd")</td>
                     <td>R @order.TotalAmount.ToString("N2")</td>
                     <td>

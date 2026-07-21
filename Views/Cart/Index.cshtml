@@ -1,11 +1,15 @@
 ﻿@model IEnumerable<DaniGroup.Models.CartItem>
 
-<h2>Your Cart</h2>
+<div class="page-banner">
+    <h2>Your Cart</h2>
+    <p class="text-muted-custom mb-0">Review your selected products before checkout.</p>
+</div>
 
 <div class="form-box">
     @if (!Model.Any())
     {
         <p>Your cart is empty.</p>
+        <a asp-controller="Products" asp-action="Index" class="btn btn-dani-primary mt-2">Start Shopping</a>
     }
     else
     {
@@ -39,7 +43,7 @@
             </tbody>
         </table>
 
-        <div class="text-end">
+        <div class="text-end mt-3">
             <a asp-controller="Checkout" asp-action="Index" class="btn btn-dani-primary">Proceed to Checkout</a>
         </div>
     }

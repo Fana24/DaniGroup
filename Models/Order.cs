@@ -8,37 +8,38 @@ namespace DaniGroup.Models
         public int Id { get; set; }
 
         [Required]
-        public string UserId { get; set; }
+        public string UserId { get; set; } = "";
 
         [Required]
         [StringLength(100)]
-        public string FullName { get; set; }
+        public string FullName { get; set; } = "";
 
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [StringLength(150)]
+        public string Email { get; set; } = "";
 
         [Required]
         [StringLength(200)]
-        public string AddressLine1 { get; set; }
+        public string AddressLine1 { get; set; } = "";
 
+        [StringLength(200)]
         public string? AddressLine2 { get; set; }
 
         [Required]
         [StringLength(100)]
-        public string City { get; set; }
+        public string City { get; set; } = "";
 
         [Required]
         [StringLength(100)]
-        public string State { get; set; }
+        public string State { get; set; } = "";
 
         [Required]
         [StringLength(30)]
-        public string PostalCode { get; set; }
+        public string PostalCode { get; set; } = "";
 
         [Required]
         [StringLength(50)]
-        public string Country { get; set; }
+        public string Country { get; set; } = "";
 
         [Required]
         [StringLength(30)]
@@ -49,6 +50,18 @@ namespace DaniGroup.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }
 
-        public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+        [StringLength(50)]
+        public string PaymentStatus { get; set; } = "Pending";
+
+        [StringLength(100)]
+        public string PaymentProvider { get; set; } = "Yoco";
+
+        [StringLength(200)]
+        public string? PaymentReference { get; set; }
+
+        [StringLength(200)]
+        public string? PaymentCheckoutId { get; set; }
+
+        public List<OrderItem> OrderItems { get; set; } = new();
     }
 }

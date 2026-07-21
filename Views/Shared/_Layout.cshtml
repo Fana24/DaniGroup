@@ -9,11 +9,14 @@
 </head>
 <body class="site-body">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark dani-navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark dani-navbar shadow-lg">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/logo/DaniLogo.png" alt="Dani Group Logo" class="site-logo me-2" />
-                    <span class="brand-text">Dani Group</span>
+                    <img src="~/images/logo/DA Logo1.png" asp-append-version="true" alt="Dani Group Logo" class="site-logo me-2" />
+                    <div class="brand-block">
+                        <span class="brand-text">Dani Group</span>
+                        <small class="brand-subtext">Auto Parts • Services • Delivery</small>
+                    </div>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
@@ -21,23 +24,28 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="mainNav">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Products" asp-action="Index">Store</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Dropper" asp-action="Index">Dropper</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">About</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Contact" asp-action="Index">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Returns" asp-action="Create">Returns</a></li>
+                    <ul class="navbar-nav me-auto align-items-lg-center">
+                        <li class="nav-item">
+                            <a class="nav-link nav-main-link" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-main-link" asp-controller="Products" asp-action="Index">Store</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-main-link" asp-controller="Dropper" asp-action="Index">Dropper</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-main-link" asp-controller="Home" asp-action="About">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-main-link" asp-controller="Contact" asp-action="Index">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-main-link" asp-controller="Returns" asp-action="Create">Returns</a>
+                        </li>
                     </ul>
 
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" asp-controller="Cart" asp-action="Index">Cart</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Orders" asp-action="Index">Orders</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Dashboard">Account</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/Identity/Account/Login">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/Identity/Account/Register">Sign Up</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="Index">Admin</a></li>
-                    </ul>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
@@ -47,10 +55,40 @@
         @RenderBody()
     </main>
 
-    <footer class="dani-footer text-center p-4 mt-5">
-        <div class="container">
-            <p class="mb-1">&copy; July 2026 Dani Group. All rights reserved.</p>
-            <p class="mb-0">Car Parts | Accessories | Bike Parts | Dropper Services</p>
+    <footer class="dani-footer mt-5">
+        <div class="container py-4">
+            <div class="row gy-4">
+                <div class="col-md-4">
+                    <h5 class="footer-title">Dani Group</h5>
+                    <p class="footer-text">
+                        Premium auto parts, accessories, bike parts, delivery services,
+                        towing, and customer-first support.
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-controller="Products" asp-action="Index">Store</a></li>
+                        <li><a asp-controller="Dropper" asp-action="Index">Dropper</a></li>
+                        <li><a asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-controller="Contact" asp-action="Index">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4">
+                    <h5 class="footer-title">Business Info</h5>
+                    <p class="footer-text mb-1">Dani Group</p>
+                    <p class="footer-text mb-1">South Africa</p>
+                    <p class="footer-text mb-1">Support for parts, transport, and returns</p>
+                </div>
+            </div>
+
+            <hr class="footer-line" />
+            <div class="text-center footer-bottom">
+                &copy; 2026 Dani Group. All rights reserved.
+            </div>
         </div>
     </footer>
 

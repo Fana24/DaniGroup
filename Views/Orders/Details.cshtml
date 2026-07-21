@@ -6,6 +6,9 @@
     <p><strong>Order ID:</strong> @Model.Id</p>
     <p><strong>Date:</strong> @Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")</p>
     <p><strong>Status:</strong> @Model.OrderStatus</p>
+    <p><strong>Payment Provider:</strong> @Model.PaymentProvider</p>
+    <p><strong>Payment Status:</strong> @Model.PaymentStatus</p>
+    <p><strong>Payment Reference:</strong> @Model.PaymentReference</p>
     <p>
         <strong>Shipping Address:</strong><br />
         @Model.FullName<br />
