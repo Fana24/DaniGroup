@@ -1,4 +1,5 @@
 ﻿using DaniGroup.Data;
+using DaniGroup.Helpers;
 using DaniGroup.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,30 +38,31 @@ namespace DaniGroup.Controllers
         [HttpGet]
         public async Task<IActionResult> AddProduct()
         {
-            ViewBag.Categories = new SelectList(
-                await _context.Categories.ToListAsync(),
-                "Id",
-                "Name");
-
-            return View();
+            await LoadCategories();
+            return View(new Product());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddProduct(Product model, IFormFile? imageFile)
         {
+            await LoadCategories(model.CategoryId);
+
             if (!ModelState.IsValid)
             {
-                ViewBag.Categories = new SelectList(
-                    await _context.Categories.ToListAsync(),
-                    "Id",
-                    "Name");
-
+                TempData["ErrorMessage"] = "Please fix the form errors and try again.";
                 return View(model);
             }
 
-            if (imageFile != null && imageFile.Length > 0)
+            if (imageFile != null)
             {
+                if (!FileValidationHelper.IsValidImage(imageFile))
+                {
+                    ModelState.AddModelError("", "Only JPG, JPEG, PNG, or WEBP images up to 2 MB are allowed.");
+                    TempData["ErrorMessage"] = "Image upload failed validation.";
+                    return View(model);
+                }
+
                 string uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "products");
                 Directory.CreateDirectory(uploadsFolder);
 
@@ -75,10 +77,20 @@ namespace DaniGroup.Controllers
                 model.ImagePath = "/uploads/products/" + fileName;
             }
 
-            _context.Products.Add(model);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Products.Add(model);
+                await _context.SaveChangesAsync();
 
-            return RedirectToAction("Products");
+                TempData["SuccessMessage"] = "Product added successfully.";
+                return RedirectToAction("Products");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "An error occurred while saving the product: " + ex.Message);
+                TempData["ErrorMessage"] = "Could not save the product.";
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -89,12 +101,7 @@ namespace DaniGroup.Controllers
             if (product == null)
                 return NotFound();
 
-            ViewBag.Categories = new SelectList(
-                await _context.Categories.ToListAsync(),
-                "Id",
-                "Name",
-                product.CategoryId);
-
+            await LoadCategories(product.CategoryId);
             return View(product);
         }
 
@@ -102,14 +109,11 @@ namespace DaniGroup.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProduct(Product model, IFormFile? imageFile)
         {
+            await LoadCategories(model.CategoryId);
+
             if (!ModelState.IsValid)
             {
-                ViewBag.Categories = new SelectList(
-                    await _context.Categories.ToListAsync(),
-                    "Id",
-                    "Name",
-                    model.CategoryId);
-
+                TempData["ErrorMessage"] = "Please fix the form errors and try again.";
                 return View(model);
             }
 
@@ -125,8 +129,15 @@ namespace DaniGroup.Controllers
             product.CategoryId = model.CategoryId;
             product.IsFeatured = model.IsFeatured;
 
-            if (imageFile != null && imageFile.Length > 0)
+            if (imageFile != null)
             {
+                if (!FileValidationHelper.IsValidImage(imageFile))
+                {
+                    ModelState.AddModelError("", "Only JPG, JPEG, PNG, or WEBP images up to 2 MB are allowed.");
+                    TempData["ErrorMessage"] = "Image upload failed validation.";
+                    return View(model);
+                }
+
                 string uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "products");
                 Directory.CreateDirectory(uploadsFolder);
 
@@ -141,24 +152,79 @@ namespace DaniGroup.Controllers
                 product.ImagePath = "/uploads/products/" + fileName;
             }
 
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
 
-            return RedirectToAction("Products");
+                TempData["SuccessMessage"] = "Product updated successfully.";
+                return RedirectToAction("Products");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "An error occurred while updating the product: " + ex.Message);
+                TempData["ErrorMessage"] = "Could not update the product.";
+                return View(model);
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products
+                .Include(p => p.Reviews)
+                .FirstOrDefaultAsync(p => p.Id == id);
 
-            if (product != null)
+            if (product == null)
             {
+                TempData["ErrorMessage"] = "Product not found.";
+                return RedirectToAction("Products");
+            }
+
+            try
+            {
+                var cartItems = await _context.CartItems
+                    .Where(c => c.ProductId == id)
+                    .ToListAsync();
+
+                if (cartItems.Any())
+                {
+                    _context.CartItems.RemoveRange(cartItems);
+                }
+
+                var reviews = await _context.ProductReviews
+                    .Where(r => r.ProductId == id)
+                    .ToListAsync();
+
+                if (reviews.Any())
+                {
+                    _context.ProductReviews.RemoveRange(reviews);
+                }
+
+                var orderItemsExist = await _context.OrderItems.AnyAsync(oi => oi.ProductId == id);
+                if (orderItemsExist)
+                {
+                    TempData["ErrorMessage"] = "This product cannot be deleted because it exists in customer orders.";
+                    return RedirectToAction("Products");
+                }
+
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Product deleted successfully.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Error deleting product: " + ex.Message;
             }
 
             return RedirectToAction("Products");
+        }
+
+        private async Task LoadCategories(int? selectedCategoryId = null)
+        {
+            var categories = await _context.Categories.ToListAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name", selectedCategoryId);
         }
 
         public async Task<IActionResult> Orders()
@@ -195,6 +261,7 @@ namespace DaniGroup.Controllers
             order.OrderStatus = orderStatus;
             await _context.SaveChangesAsync();
 
+            TempData["SuccessMessage"] = "Order status updated successfully.";
             return RedirectToAction("OrderDetails", new { id = orderId });
         }
 

@@ -1,0 +1,65 @@
+﻿@model DaniGroup.Models.Order
+
+<div class="page-banner">
+    <h2>Invoice / Receipt</h2>
+    <p class="text-muted-custom mb-0">Order receipt for Dani Group purchase.</p>
+</div>
+
+<div class="form-box">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h4>Dani Group</h4>
+            <p>South Africa</p>
+            <p>Automotive Parts and Services</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <h4>Invoice</h4>
+            <p><strong>Order ID:</strong> #@Model.Id</p>
+            <p><strong>Date:</strong> @Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")</p>
+            <p><strong>Payment Status:</strong> @Model.PaymentStatus</p>
+        </div>
+    </div>
+
+    <hr class="footer-line" />
+
+    <div class="mb-4">
+        <h5>Billed To</h5>
+        <p class="mb-1">@Model.FullName</p>
+        <p class="mb-1">@Model.AddressLine1</p>
+        @if (!string.IsNullOrWhiteSpace(Model.AddressLine2))
+        {
+            <p class="mb-1">@Model.AddressLine2</p>
+        }
+        <p class="mb-1">@Model.City, @Model.State, @Model.PostalCode</p>
+        <p class="mb-1">@Model.Country</p>
+        <p class="mb-1">@Model.Email</p>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Unit Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems)
+            {
+                <tr>
+                    <td>@item.Product?.Name</td>
+                    <td>R @item.UnitPrice.ToString("N2")</td>
+                    <td>@item.Quantity</td>
+                    <td>R @((item.UnitPrice * item.Quantity).ToString("N2"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4 class="text-end mt-3">Grand Total: R @Model.TotalAmount.ToString("N2")</h4>
+
+    <div class="mt-4">
+        <button class="btn btn-dani-outline" onclick="window.print()">Print Receipt</button>
+    </div>
+</div>

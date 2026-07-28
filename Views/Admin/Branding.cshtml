@@ -1,0 +1,41 @@
+﻿@model DaniGroup.Models.SiteBrandingViewModel
+
+<div class="page-banner">
+    <h2>Branding</h2>
+    <p class="text-muted-custom mb-0">Upload and manage the Dani Group logo and background images.</p>
+</div>
+
+<div class="form-box">
+    <form asp-action="Branding" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+
+        <div class="mb-4">
+            <label class="form-label">Logo Image</label>
+            <input type="file" name="logoFile" class="form-control" />
+            @if (!string.IsNullOrEmpty(Model.LogoPath))
+            {
+                <img src="@Model.LogoPath" class="mt-3 rounded" style="max-height: 100px;" />
+            }
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Homepage Hero Background</label>
+            <input type="file" name="heroFile" class="form-control" />
+            @if (!string.IsNullOrEmpty(Model.HomeHeroPath))
+            {
+                <img src="@Model.HomeHeroPath" class="mt-3 rounded" style="max-height: 140px;" />
+            }
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Site Background</label>
+            <input type="file" name="backgroundFile" class="form-control" />
+            @if (!string.IsNullOrEmpty(Model.SiteBackgroundPath))
+            {
+                <img src="@Model.SiteBackgroundPath" class="mt-3 rounded" style="max-height: 140px;" />
+            }
+        </div>
+
+        <button type="submit" class="btn btn-dani-primary">Save Branding</button>
+    </form>
+</div>

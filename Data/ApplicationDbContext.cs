@@ -18,5 +18,9 @@ namespace DaniGroup.Data
         public DbSet<ReturnRequest> ReturnRequests { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+
+        public DbSet<ProductReview> ProductReviews => Set<ProductReview>();
+
+        public DbSet<SiteSetting> SiteSettings => Set<SiteSetting>();
     }
 }

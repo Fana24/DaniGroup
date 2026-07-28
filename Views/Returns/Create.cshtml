@@ -1,6 +1,9 @@
 ﻿@model DaniGroup.Models.ReturnRequest
 
-<h2>Request a Return</h2>
+<div class="page-banner">
+    <h2>Request a Return</h2>
+    <p class="text-muted-custom mb-0">Submit your damaged or incorrect item request with supporting details.</p>
+</div>
 
 <div class="form-box">
     <form asp-action="Create" method="post" enctype="multipart/form-data">
@@ -14,7 +17,7 @@
 
         <div class="mb-3">
             <label asp-for="Reason"></label>
-            <textarea asp-for="Reason" class="form-control" rows="5"></textarea>
+            <textarea asp-for="Reason" class="form-control" rows="6"></textarea>
             <span asp-validation-for="Reason" class="text-danger"></span>
         </div>
 

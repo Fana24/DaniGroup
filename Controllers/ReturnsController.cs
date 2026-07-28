@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using DaniGroup.Helpers;
 
 namespace DaniGroup.Controllers
 {
@@ -46,8 +47,14 @@ namespace DaniGroup.Controllers
             model.CreatedAt = DateTime.Now;
             model.Status = "Pending";
 
-            if (damageImage != null && damageImage.Length > 0)
+            if (damageImage != null)
             {
+                if (!FileValidationHelper.IsValidImage(damageImage))
+                {
+                    ModelState.AddModelError("", "Only JPG, JPEG, PNG, or WEBP images up to 2 MB are allowed.");
+                    return View(model);
+                }
+
                 string uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "returns");
                 Directory.CreateDirectory(uploadsFolder);
 

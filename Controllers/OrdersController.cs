@@ -30,6 +30,22 @@ namespace DaniGroup.Controllers
             return View(orders);
         }
 
+        public async Task<IActionResult> Invoice(int id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Challenge();
+
+            var order = await _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .FirstOrDefaultAsync(o => o.Id == id && o.UserId == user.Id);
+
+            if (order == null)
+                return NotFound();
+
+            return View(order);
+        }
+
         public async Task<IActionResult> Details(int id)
         {
             var user = await _userManager.GetUserAsync(User);

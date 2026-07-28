@@ -1,15 +1,30 @@
 ﻿@model DaniGroup.Models.Order
 
-<div class="form-box text-center">
+<div class="page-banner text-center">
     <h2>Order Placed Successfully</h2>
-    <p>Thank you for shopping with Dani Group.</p>
+    <p class="text-muted-custom mb-0">Thank you for choosing Dani Group.</p>
+</div>
 
-    <p><strong>Order ID:</strong> @Model.Id</p>
-    <p><strong>Status:</strong> @Model.OrderStatus</p>
-    <p><strong>Total:</strong> R @Model.TotalAmount.ToString("N2")</p>
+<div class="form-box text-center">
+    <p>Your order has been received and is now being processed.</p>
 
-    <div class="mt-3">
-        <a asp-controller="Orders" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-dani-primary me-2">View Order</a>
-        <a asp-controller="Products" asp-action="Index" class="btn btn-dani-outline">Continue Shopping</a>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6">
+            <div class="dashboard-card">
+                <h4>Order ID</h4>
+                <p>@Model.Id</p>
+            </div>
+        </div>
+        <div class="col-md-6 mt-3 mt-md-0">
+            <div class="dashboard-card">
+                <h4>Total</h4>
+                <p>R @Model.TotalAmount.ToString("N2")</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-controller="Orders" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-dani-primary me-2 mb-2">View Order</a>
+        <a asp-controller="Products" asp-action="Index" class="btn btn-dani-outline mb-2">Continue Shopping</a>
     </div>
 </div>

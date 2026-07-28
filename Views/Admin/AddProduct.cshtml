@@ -1,8 +1,18 @@
 ﻿@model DaniGroup.Models.Product
 
-<h2>Add Product</h2>
+<div class="page-banner">
+    <h2>Add Product</h2>
+    <p class="text-muted-custom mb-0">Create a new product listing for the Dani Group store.</p>
+</div>
 
 <div class="form-box">
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
     <form asp-action="AddProduct" method="post" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
 
@@ -14,25 +24,30 @@
 
         <div class="mb-3">
             <label asp-for="Description"></label>
-            <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+            <textarea asp-for="Description" class="form-control" rows="6"></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
-        <div class="mb-3">
-            <label asp-for="Price"></label>
-            <input asp-for="Price" class="form-control" />
-            <span asp-validation-for="Price" class="text-danger"></span>
-        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="Price"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
 
-        <div class="mb-3">
-            <label asp-for="StockQuantity"></label>
-            <input asp-for="StockQuantity" class="form-control" />
-            <span asp-validation-for="StockQuantity" class="text-danger"></span>
+            <div class="col-md-6 mb-3">
+                <label asp-for="StockQuantity"></label>
+                <input asp-for="StockQuantity" class="form-control" />
+                <span asp-validation-for="StockQuantity" class="text-danger"></span>
+            </div>
         </div>
 
         <div class="mb-3">
             <label asp-for="CategoryId"></label>
-            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select"></select>
+            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select">
+                <option value="">-- Select Category --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
         </div>
 
         <div class="mb-3">

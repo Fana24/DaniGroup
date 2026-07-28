@@ -1,27 +1,37 @@
 ﻿@model DaniGroup.Models.Order
 
-<h2>Order Details</h2>
+<div class="page-banner">
+    <h2>Order Details</h2>
+    <p class="text-muted-custom mb-0">Review your order and payment information.</p>
+</div>
+
+<div class="form-box mb-4">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <h4>Order Information</h4>
+            <p><strong>Order ID:</strong> #@Model.Id</p>
+            <p><strong>Date:</strong> @Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")</p>
+            <p><strong>Order Status:</strong> @Model.OrderStatus</p>
+            <p><strong>Payment Status:</strong> @Model.PaymentStatus</p>
+            <p><strong>Payment Provider:</strong> @Model.PaymentProvider</p>
+        </div>
+
+        <div class="col-md-6">
+            <h4>Delivery Address</h4>
+            <p>@Model.FullName</p>
+            <p>@Model.AddressLine1</p>
+            @if (!string.IsNullOrWhiteSpace(Model.AddressLine2))
+            {
+                <p>@Model.AddressLine2</p>
+            }
+            <p>@Model.City, @Model.State, @Model.PostalCode</p>
+            <p>@Model.Country</p>
+        </div>
+    </div>
+</div>
 
 <div class="form-box">
-    <p><strong>Order ID:</strong> @Model.Id</p>
-    <p><strong>Date:</strong> @Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")</p>
-    <p><strong>Status:</strong> @Model.OrderStatus</p>
-    <p><strong>Payment Provider:</strong> @Model.PaymentProvider</p>
-    <p><strong>Payment Status:</strong> @Model.PaymentStatus</p>
-    <p><strong>Payment Reference:</strong> @Model.PaymentReference</p>
-    <p>
-        <strong>Shipping Address:</strong><br />
-        @Model.FullName<br />
-        @Model.AddressLine1<br />
-        @if (!string.IsNullOrWhiteSpace(Model.AddressLine2))
-        {
-            @Model.AddressLine2
-        
-            <br />
-        }
-        @Model.City, @Model.State, @Model.PostalCode<br />
-        @Model.Country
-    </p>
+    <h4 class="mb-3">Items Ordered</h4>
 
     <table class="table">
         <thead>
@@ -45,5 +55,6 @@
         </tbody>
     </table>
 
-    <h4 class="text-end">Total: R @Model.TotalAmount.ToString("N2")</h4>
+    <h4 class="text-end mt-3">Total: R @Model.TotalAmount.ToString("N2")</h4>
+    <a asp-action="Invoice" asp-route-id="@Model.Id" class="btn btn-dani-outline mt-3">View Invoice / Receipt</a>
 </div>

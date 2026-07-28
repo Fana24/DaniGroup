@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<DaniGroup.Models.ReturnRequest>
 
-<h2>My Return Requests</h2>
+<div class="page-banner">
+    <h2>My Return Requests</h2>
+    <p class="text-muted-custom mb-0">Track the progress of your submitted return requests.</p>
+</div>
 
 <div class="form-box">
     @if (!Model.Any())
@@ -12,11 +15,11 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Order Reference</th>
+                    <th>Order Ref</th>
                     <th>Reason</th>
                     <th>Status</th>
                     <th>Date</th>
-                    <th>Damage Image</th>
+                    <th>Image</th>
                 </tr>
             </thead>
             <tbody>

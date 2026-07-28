@@ -14,6 +14,7 @@ namespace DaniGroup.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly YocoPaymentService _yocoPaymentService;
+        private readonly EmailService _emailService;
 
         public CheckoutController(
             ApplicationDbContext context,

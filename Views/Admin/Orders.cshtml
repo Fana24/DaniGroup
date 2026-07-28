@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<DaniGroup.Models.Order>
 
-<h2>Manage Orders</h2>
+<div class="page-banner">
+    <h2>Manage Orders</h2>
+    <p class="text-muted-custom mb-0">Monitor customer orders and update statuses.</p>
+</div>
 
 <div class="form-box">
     <table class="table">
@@ -20,7 +23,7 @@
             @foreach (var order in Model)
             {
                 <tr>
-                    <td>@order.Id</td>
+                    <td>#@order.Id</td>
                     <td>@order.FullName</td>
                     <td>@order.Email</td>
                     <td>@order.OrderStatus</td>

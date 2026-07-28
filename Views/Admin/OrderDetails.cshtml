@@ -1,41 +1,60 @@
 ﻿@model DaniGroup.Models.Order
 
-<h2>Order Details</h2>
+<div class="page-banner">
+    <h2>Order Details</h2>
+    <p class="text-muted-custom mb-0">Review order contents, payment details, and update status.</p>
+</div>
+
+<div class="form-box mb-4">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <h4>Order Information</h4>
+            <p><strong>Order ID:</strong> #@Model.Id</p>
+            <p><strong>Customer:</strong> @Model.FullName</p>
+            <p><strong>Email:</strong> @Model.Email</p>
+            <p><strong>Order Status:</strong> @Model.OrderStatus</p>
+            <p><strong>Payment Status:</strong> @Model.PaymentStatus</p>
+            <p><strong>Payment Provider:</strong> @Model.PaymentProvider</p>
+            <p><strong>Payment Reference:</strong> @Model.PaymentReference</p>
+            <p><strong>Checkout ID:</strong> @Model.PaymentCheckoutId</p>
+        </div>
+
+        <div class="col-md-6">
+            <h4>Delivery Address</h4>
+            <p>@Model.AddressLine1</p>
+            @if (!string.IsNullOrWhiteSpace(Model.AddressLine2))
+            {
+                <p>@Model.AddressLine2</p>
+            }
+            <p>@Model.City, @Model.State, @Model.PostalCode</p>
+            <p>@Model.Country</p>
+
+            <hr class="footer-line" />
+
+            <h4>Update Status</h4>
+            <form asp-action="UpdateOrderStatus" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="orderId" value="@Model.Id" />
+
+                <div class="mb-3">
+                    <select name="orderStatus" class="form-select">
+                        <option value="Pending">Pending</option>
+                        <option value="Pending Payment">Pending Payment</option>
+                        <option value="Processing">Processing</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-dani-primary">Update Status</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div class="form-box">
-    <p><strong>Order ID:</strong> @Model.Id</p>
-    <p><strong>Customer:</strong> @Model.FullName</p>
-    <p><strong>Email:</strong> @Model.Email</p>
-    <p><strong>Payment Provider:</strong> @Model.PaymentProvider</p>
-    <p><strong>Payment Status:</strong> @Model.PaymentStatus</p>
-    <p><strong>Payment Reference:</strong> @Model.PaymentReference</p>
-    <p><strong>Checkout ID:</strong> @Model.PaymentCheckoutId</p>
-    <p>
-        <strong>Address:</strong>
-        @Model.AddressLine1, @Model.City, @Model.State, @Model.PostalCode, @Model.Country
-    </p>
-    <p><strong>Status:</strong> @Model.OrderStatus</p>
-    <p><strong>Created:</strong> @Model.CreatedAt</p>
-
-    <form asp-action="UpdateOrderStatus" method="post" class="mb-4">
-        @Html.AntiForgeryToken()
-        <input type="hidden" name="orderId" value="@Model.Id" />
-
-        <div class="row">
-            <div class="col-md-6">
-                <select name="orderStatus" class="form-select">
-                    <option value="Pending">Pending</option>
-                    <option value="Processing">Processing</option>
-                    <option value="Shipped">Shipped</option>
-                    <option value="Completed">Completed</option>
-                    <option value="Cancelled">Cancelled</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <button type="submit" class="btn btn-dani-primary">Update Status</button>
-            </div>
-        </div>
-    </form>
+    <h4 class="mb-3">Order Items</h4>
 
     <table class="table">
         <thead>
@@ -59,5 +78,5 @@
         </tbody>
     </table>
 
-    <h4 class="text-end">Order Total: R @Model.TotalAmount.ToString("N2")</h4>
+    <h4 class="text-end mt-3">Order Total: R @Model.TotalAmount.ToString("N2")</h4>
 </div>
