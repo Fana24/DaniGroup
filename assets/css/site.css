@@ -760,13 +760,30 @@ html[data-theme="light"] .addr-suggestion-credit {
 html[data-theme="light"] .page-banner p,
 html[data-theme="light"] .page-banner span,
 html[data-theme="light"] .dashboard-card p,
-html[data-theme="light"] .dashboard-card span {
+html[data-theme="light"] .dashboard-card span,
+html[data-theme="light"] .hero-content p,
+html[data-theme="light"] .hero-content span {
     color: var(--dani-white);
 }
 
 html[data-theme="light"] .page-banner .text-muted-custom,
 html[data-theme="light"] .dashboard-card .text-muted-custom {
     color: var(--dani-muted);
+}
+
+html[data-theme="light"] .dani-footer p,
+html[data-theme="light"] .dani-footer li,
+html[data-theme="light"] .footer-text,
+html[data-theme="light"] .footer-bottom {
+    color: #d0d0d0;
+}
+
+html[data-theme="light"] .footer-links a {
+    color: #d8d8d8;
+}
+
+html[data-theme="light"] .footer-links a:hover {
+    color: var(--dani-orange);
 }
 
 /* Theme toggle switch */
