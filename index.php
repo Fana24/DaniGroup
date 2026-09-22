@@ -60,7 +60,7 @@ require __DIR__ . '/includes/header.php';
     <div class="hero-overlay">
         <div class="hero-content text-center">
             <span class="badge-dani mb-3 d-inline-block">Trusted Automotive &amp; Service Platform</span>
-            <h1>Dani Group</h1>
+            <h1>Leading Online Store</h1>
             <p>
                 Your trusted destination for premium car parts, appliances, accessories, bike parts,
                 parcel delivery, towing, furniture moving, and reliable customer support.

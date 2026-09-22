@@ -2,11 +2,11 @@
     --dani-orange: #ff7a00;
     --dani-orange-dark: #d96400;
     --dani-orange-light: #ff9d42;
-    --dani-black: #0f0f0f;
-    --dani-deep-black: #050505;
-    --dani-dark: #181818;
-    --dani-card: rgba(20, 20, 20, 0.95);
-    --dani-border: #2f2f2f;
+    --dani-black: #222222;
+    --dani-deep-black: #161616;
+    --dani-dark: #2a2a2a;
+    --dani-card: rgba(42, 42, 42, 0.95);
+    --dani-border: #444444;
     --dani-white: #ffffff;
     --dani-muted: #c8c8c8;
     --dani-soft: #f3f3f3;
@@ -20,7 +20,7 @@ html {
 body.site-body {
     font-family: "Segoe UI", Arial, sans-serif;
     background-color: var(--dani-black);
-    background-image: linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.82)), url('/assets/images/backgrounds/site-bg.jpg');
+    background-image: linear-gradient(rgba(25,25,25,0.62), rgba(25,25,25,0.62)), url('/assets/images/backgrounds/site-bg.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -34,7 +34,7 @@ body.site-body {
 }
 
 .dani-navbar {
-    background: linear-gradient(90deg, #000000 0%, #111111 60%, #1a1a1a 100%) !important;
+    background: linear-gradient(90deg, #1c1c1c 0%, #262626 60%, #303030 100%) !important;
     border-bottom: 3px solid var(--dani-orange);
     padding-top: 12px;
     padding-bottom: 12px;
@@ -131,7 +131,7 @@ body.site-body {
 }
 
 .hero-overlay {
-    background: linear-gradient(135deg, rgba(0,0,0,0.83), rgba(0,0,0,0.68));
+    background: linear-gradient(135deg, rgba(25,25,25,0.68), rgba(35,35,35,0.52));
     min-height: 540px;
     display: flex;
     justify-content: center;
@@ -231,7 +231,7 @@ p, li, span, label, td, th {
 }
 
 .form-box {
-    background: linear-gradient(180deg, rgba(14,14,14,0.94), rgba(22,22,22,0.94));
+    background: linear-gradient(180deg, rgba(34,34,34,0.90), rgba(42,42,42,0.90));
     border: 1px solid var(--dani-border);
     border-radius: 16px;
     padding: 28px;
@@ -241,9 +241,9 @@ p, li, span, label, td, th {
 input.form-control,
 select.form-select,
 textarea.form-control {
-    background-color: #202020;
+    background-color: #333333;
     color: white;
-    border: 1px solid #555;
+    border: 1px solid #5a5a5a;
     border-radius: 10px;
     padding: 12px;
 }
@@ -251,7 +251,7 @@ textarea.form-control {
     input.form-control:focus,
     select.form-select:focus,
     textarea.form-control:focus {
-        background-color: #202020;
+        background-color: #333333;
         color: white;
         border-color: var(--dani-orange);
         box-shadow: 0 0 0 0.22rem rgba(255, 122, 0, 0.22);
@@ -259,7 +259,7 @@ textarea.form-control {
 
 .table {
     color: white;
-    background-color: rgba(0,0,0,0.40);
+    background-color: rgba(35,35,35,0.45);
     border-radius: 12px;
     overflow: hidden;
 }
@@ -276,7 +276,7 @@ textarea.form-control {
     }
 
 .dashboard-card {
-    background: linear-gradient(180deg, rgba(10,10,10,0.93), rgba(20,20,20,0.90)), url('/assets/images/backgrounds/banner-photo.jpg');
+    background: linear-gradient(180deg, rgba(28,28,28,0.85), rgba(38,38,38,0.82)), url('/assets/images/backgrounds/banner-photo.jpg');
     background-repeat: no-repeat;
     background-position: center 78%;
     background-size: cover;
@@ -306,7 +306,7 @@ textarea.form-control {
     }
 
 .category-box {
-    background: linear-gradient(180deg, rgba(12,12,12,0.92), rgba(24,24,24,0.92));
+    background: linear-gradient(180deg, rgba(30,30,30,0.85), rgba(40,40,40,0.85));
     border-left: 5px solid var(--dani-orange);
     border-radius: 16px;
     padding: 24px;
@@ -567,10 +567,10 @@ a {
     left: 0;
     right: 0;
     z-index: 40;
-    background-color: #161616;
+    background-color: #2a2a2a;
     border: 1px solid var(--dani-orange);
     border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
     max-height: 260px;
     overflow-y: auto;
 }
