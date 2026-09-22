@@ -1,0 +1,2 @@
+This folder needs to stay writable by PHP (cPanel default 755 is usually fine).
+Uploaded product images are saved here automatically.
