@@ -30,7 +30,7 @@ $__user = current_user();
                 <img src="/assets/images/logo/DA Logo1.png" alt="Dani Group Logo" class="site-logo me-2">
                 <div class="brand-block">
                     <span class="brand-text">Dani Group</span>
-                    <small class="brand-subtext">Auto Parts &bull; Services &bull; Delivery</small>
+                    <small class="brand-subtext">Retail &bull; Auto Parts &bull; Delivery Services</small>
                 </div>
             </a>
 
