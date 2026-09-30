@@ -51,6 +51,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $distanceKm, $estimatedHours, $preferredDate ?: null, $estimatedCost, $notes ?: null, 'Pending',
         ]);
 
+        send_site_email(
+            'info@danigroup.co.za',
+            'New Moving Request - ' . $name,
+            sprintf(
+                '<p>New furniture moving request submitted.</p><p><strong>Name:</strong> %s<br><strong>Phone:</strong> %s<br><strong>Email:</strong> %s<br><strong>Vehicle:</strong> %s<br><strong>Pickup:</strong> %s<br><strong>Drop-off:</strong> %s<br><strong>Distance:</strong> %s km<br><strong>Estimated hours:</strong> %s<br><strong>Preferred date:</strong> %s<br><strong>Estimated cost:</strong> R%s<br><strong>Notes:</strong> %s</p>',
+                htmlspecialchars($name),
+                htmlspecialchars($phone),
+                htmlspecialchars($email),
+                htmlspecialchars($vehicleType),
+                htmlspecialchars($pickupLocation),
+                htmlspecialchars($dropoffLocation),
+                $distanceKm,
+                $estimatedHours,
+                htmlspecialchars($preferredDate ?: 'Not specified'),
+                number_format($estimatedCost, 2),
+                htmlspecialchars($notes ?: 'None')
+            )
+        );
+
         $success = sprintf(
             'Your furniture moving request has been submitted. Estimated cost: R%s (min %s hr on-site). Our team will confirm your booking shortly.',
             number_format($estimatedCost, 2),

@@ -45,6 +45,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         $stmt->execute([$name, $phone, $email, $parcelSize, $pickupLocation, $dropoffLocation, $distanceKm, $weightKg, $estimatedCost, $notes ?: null, 'Pending']);
 
+        send_site_email(
+            'info@danigroup.co.za',
+            'New Parcel Delivery Request - ' . $name,
+            sprintf(
+                '<p>New parcel delivery request submitted.</p><p><strong>Name:</strong> %s<br><strong>Phone:</strong> %s<br><strong>Email:</strong> %s<br><strong>Parcel size:</strong> %s<br><strong>Weight:</strong> %s kg<br><strong>Pickup:</strong> %s<br><strong>Drop-off:</strong> %s<br><strong>Distance:</strong> %s km<br><strong>Estimated cost:</strong> R%s<br><strong>Notes:</strong> %s</p>',
+                htmlspecialchars($name),
+                htmlspecialchars($phone),
+                htmlspecialchars($email),
+                htmlspecialchars($parcelSize),
+                $weightKg,
+                htmlspecialchars($pickupLocation),
+                htmlspecialchars($dropoffLocation),
+                $distanceKm,
+                number_format($estimatedCost, 2),
+                htmlspecialchars($notes ?: 'None')
+            )
+        );
+
         $success = sprintf(
             'Your parcel delivery request has been submitted. Estimated cost: R%s. Our team will confirm collection shortly.',
             number_format($estimatedCost, 2)

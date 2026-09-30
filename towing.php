@@ -43,6 +43,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         $stmt->execute([$name, $phone, $email, $vehicleType, $pickupLocation, $dropoffLocation, $distanceKm, $estimatedCost, $notes ?: null, 'Pending']);
 
+        send_site_email(
+            'info@danigroup.co.za',
+            'New Towing Request - ' . $name,
+            sprintf(
+                '<p>New towing request submitted.</p><p><strong>Name:</strong> %s<br><strong>Phone:</strong> %s<br><strong>Email:</strong> %s<br><strong>Vehicle:</strong> %s<br><strong>Pickup:</strong> %s<br><strong>Drop-off:</strong> %s<br><strong>Distance:</strong> %s km<br><strong>Estimated cost:</strong> R%s<br><strong>Notes:</strong> %s</p>',
+                htmlspecialchars($name),
+                htmlspecialchars($phone),
+                htmlspecialchars($email),
+                htmlspecialchars($vehicleType),
+                htmlspecialchars($pickupLocation),
+                htmlspecialchars($dropoffLocation),
+                $distanceKm,
+                number_format($estimatedCost, 2),
+                htmlspecialchars($notes ?: 'None')
+            )
+        );
+
         $success = sprintf(
             'Your towing application has been submitted. Estimated cost: R%s. Our team will contact you shortly to confirm.',
             number_format($estimatedCost, 2)
