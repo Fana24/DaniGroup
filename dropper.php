@@ -15,6 +15,11 @@ require __DIR__ . '/includes/header.php';
 <div class="page-banner">
     <h2>Dropper Services</h2>
     <p class="text-muted-custom mb-0">Reliable transport, towing, and delivery support from Dani Group.</p>
+    <div class="mt-3">
+        <a href="https://wa.me/27785573668" target="_blank" rel="noopener noreferrer" class="btn btn-dani-primary">
+            &#128241; Contact us on WhatsApp
+        </a>
+    </div>
 </div>
 
 <div class="form-box mb-4">

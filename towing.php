@@ -78,6 +78,11 @@ require __DIR__ . '/includes/header.php';
     <p class="text-muted-custom mb-0">
         24hr emergency towing from Dani Group. Choose your vehicle type below, apply, and we'll be on our way.
     </p>
+    <div class="mt-3">
+        <a href="https://wa.me/27785573668" target="_blank" rel="noopener noreferrer" class="btn btn-dani-primary">
+            &#128241; Contact us on WhatsApp
+        </a>
+    </div>
 </div>
 
 <div class="row g-4 mb-4">
