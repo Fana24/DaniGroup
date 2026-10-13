@@ -5,8 +5,8 @@ require_once __DIR__ . '/includes/bootstrap.php';
 $rates = [
     ['type' => 'Bike',        'label' => 'Bike',          'base' => 450, 'perKm' => 15, 'icon' => '&#127949;'],
     ['type' => 'Car',         'label' => 'Car',            'base' => 450, 'perKm' => 20, 'icon' => '&#128663;'],
-    ['type' => 'SUV/Bakkie',  'label' => 'SUV / Bakkie',   'base' => 450, 'perKm' => 25, 'icon' => '&#128665;'],
-    ['type' => 'Other',       'label' => 'Other',          'base' => 450, 'perKm' => 30, 'icon' => '&#128295;'],
+    ['type' => 'SUV/Bakkie',  'label' => 'SUV / Bakkie',   'base' => 750, 'perKm' => 25, 'icon' => '&#128665;'],
+    ['type' => 'Other',       'label' => 'Other',          'base' => 1000, 'perKm' => 30, 'icon' => '&#128295;'],
 ];
 $ratesByType = array_column($rates, null, 'type');
 
