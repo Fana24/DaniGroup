@@ -17,9 +17,9 @@ if (file_exists(__DIR__ . '/../.env.php')) {
 }
 
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'cpaneluser_danigroup');
-define('DB_USER', 'cpaneluser_dbuser');
-define('DB_PASS', 'CHANGE_ME');
+define('DB_NAME', getenv('DB_NAME') ?: 'cpaneluser_danigroup');
+define('DB_USER', getenv('DB_USER') ?: 'cpaneluser_dbuser');
+define('DB_PASS', getenv('DB_PASS') ?: 'CHANGE_ME');
 define('DB_CHARSET', 'utf8mb4');
 
 // ---------------------------------------------------------------------
@@ -61,9 +61,6 @@ define('UPLOAD_ALLOWED_MIME', [
 // scheme should be double-checked against the current Yoco API docs
 // for your account before going live with real payments.
 // ---------------------------------------------------------------------
-if (file_exists(__DIR__ . '/../.env.php')) {
-    require __DIR__ . '/../.env.php';
-}
 define('YOCO_SECRET_KEY', getenv('YOCO_SECRET_KEY') ?: '');
 define('YOCO_PUBLIC_KEY', getenv('YOCO_PUBLIC_KEY') ?: '');
 define('YOCO_WEBHOOK_SECRET', getenv('YOCO_WEBHOOK_SECRET') ?: '');
