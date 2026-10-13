@@ -79,7 +79,9 @@ require __DIR__ . '/includes/header.php';
             <img src="/assets/images/site/ecommerce-laptop-gifts.jpg" alt="Shop online with Dani Group" class="img-fluid rounded shadow-lg">
         </div>
         <div class="col-md-6 text-center text-md-start">
-            <img src="/assets/images/logo/DA Logo.png" alt="Dani Group Logo" style="max-height: 120px;" class="mb-3">
+            <div class="logo-badge mb-3">
+                <img src="/assets/images/logo/DA Logo.png" alt="Dani Group Logo" style="max-height: 80px; display: block;">
+            </div>
             <h2 class="section-title">Performance. Reliability. Service.</h2>
             <p class="text-muted-custom">
                 Dani Group brings together automotive retail and practical customer services in one powerful platform.

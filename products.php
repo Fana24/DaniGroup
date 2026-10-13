@@ -30,11 +30,29 @@ if ($maxPrice !== null) {
 if ($inStockOnly) {
     $sql .= ' AND p.stock_quantity > 0';
 }
-$sql .= ' ORDER BY p.name ASC';
+$countSql = str_replace('SELECT p.*, c.name AS category_name FROM products p', 'SELECT COUNT(*) FROM products p', $sql);
+$countStmt = db()->prepare($countSql);
+$countStmt->execute($params);
+$totalProducts = (int) $countStmt->fetchColumn();
+
+$perPage = 12;
+$totalPages = max(1, (int) ceil($totalProducts / $perPage));
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+if ($page < 1) $page = 1;
+if ($page > $totalPages) $page = $totalPages;
+$offset = ($page - 1) * $perPage;
+
+$sql .= ' ORDER BY p.name ASC LIMIT ' . $perPage . ' OFFSET ' . $offset;
 
 $stmt = db()->prepare($sql);
 $stmt->execute($params);
 $products = $stmt->fetchAll();
+
+// Build a query string of the current filters (minus "page") so pagination
+// links preserve search/category/price filters.
+$filterParams = $_GET;
+unset($filterParams['page']);
+$filterQueryString = http_build_query($filterParams);
 
 $categories = db()->query('SELECT * FROM categories ORDER BY name ASC')->fetchAll();
 
@@ -135,6 +153,29 @@ require __DIR__ . '/includes/header.php';
                 </div>
             <?php endforeach; ?>
         </div>
+
+        <?php if ($totalPages > 1): ?>
+            <nav aria-label="Product pages" class="mt-4">
+                <ul class="pagination justify-content-center flex-wrap">
+                    <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?<?= $filterQueryString ? $filterQueryString . '&' : '' ?>page=<?= $page - 1 ?>">Previous</a>
+                    </li>
+
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <li class="page-item <?= $i === $page ? 'active' : '' ?>">
+                            <a class="page-link" href="?<?= $filterQueryString ? $filterQueryString . '&' : '' ?>page=<?= $i ?>"><?= $i ?></a>
+                        </li>
+                    <?php endfor; ?>
+
+                    <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?<?= $filterQueryString ? $filterQueryString . '&' : '' ?>page=<?= $page + 1 ?>">Next</a>
+                    </li>
+                </ul>
+                <p class="text-center text-muted-custom small mb-0">
+                    Showing page <?= $page ?> of <?= $totalPages ?> (<?= $totalProducts ?> product<?= $totalProducts === 1 ? '' : 's' ?> total)
+                </p>
+            </nav>
+        <?php endif; ?>
     </div>
 </div>
 
